@@ -13,14 +13,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('roles',['Admin','Empleado']);
-            $table->timestamps();
-        });
         Schema::create('Customers', function (Blueprint $table){
             $table->string('id', 10)->primary();
             $table->string('name');
@@ -34,7 +26,7 @@ return new class extends Migration
             $table->string('make');
             $table->string('customer_id', 10);
             // Clave foránea que referencia a la tabla products
-            $table->foreign('customer_id')->reference('id')->on('Customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');
         });
         Schema::create('Categories', function (Blueprint $table){
             $table->id();
@@ -58,22 +50,22 @@ return new class extends Migration
         });
         Schema::create('Inventory_movements', function (Blueprint $table){
             $table->id(); 
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('inventory_id');
             $table->enum('movement_type', ['incoming', 'outgoing']); 
             $table->integer('quantity'); 
             $table->dateTime('movement_date')->useCurrent(); 
             $table->string('reason')->nullable(); 
             // Clave foránea que referencia a la tabla products
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('inventory_id')->references('id')->on('Inventory')->onDelete('cascade');
         
         });
         Schema::create('Sales', function (Blueprint $table){
             $table->id();  // Crea la columna 'id' como clave primaria
-            $table->unsignedBigInteger('customer_id');  // Relacionado con el cliente
+            $table->string('customer_id', 10);  // Relacionado con el cliente
             $table->dateTime('sale_date')->useCurrent();  // Fecha de la venta
-            $table->decimal('total', 10, 2);  // Total de la venta
+            $table->unsignedInteger('total');  // Total de la venta
             $table->string('payment_method', 50)->nullable();  // Método de pago
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');  // Relación con la tabla 'customers'
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');  // Relación con la tabla 'customers'
            
         });
         Schema::create('Sale_details', function (Blueprint $table){
@@ -81,10 +73,10 @@ return new class extends Migration
             $table->unsignedBigInteger('sale_id');  // Relacionado con la venta
             $table->unsignedBigInteger('product_id');  // Relacionado con el producto
             $table->integer('quantity');  // Cantidad vendida
-            $table->decimal('price', 10, 2);  // Precio unitario del producto
-            $table->decimal('total', 10, 2);  // Total por producto (cantidad * precio)
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');  // Relación con la tabla 'sales'
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');  // Relación con la tabla 'products'
+            $table->unsignedInteger('price');  // Precio unitario del producto
+            $table->unsignedInteger('total');  // Total por producto (cantidad * precio)
+            $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
+            $table->foreign('product_id')->references('id')->on('Products')->onDelete('cascade');  // Relación con la tabla 'products'
             
         });
         Schema::create('Invoices', function (Blueprint $table){
@@ -93,7 +85,7 @@ return new class extends Migration
             $table->string('invoice_number', 50);  // Número de factura
             $table->dateTime('invoice_date')->useCurrent();  // Fecha de la factura
             $table->decimal('total', 10, 2);  // Total de la factura
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');  // Relación con la tabla 'sales'
+            $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
         });
     }
 
