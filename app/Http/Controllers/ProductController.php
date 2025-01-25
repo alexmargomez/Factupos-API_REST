@@ -1,34 +1,54 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     
-    public function index()
+    public function index() //Listar productos
     {
-        return 'Listado de productos';
+        $products = Product::all();
+        return response()->json($products, 200);
     }
 
-    public function create(Request $request)
+    public function create(Request $request) //Crear producto
     {
-        return 'Crear un producto';
+        $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required',  
+        ]);
+
+        $product = Product::create($request->all());
+        return response()->json($product, 201);
     }
 
-    public function show(string $id)
+    public function show($id) //Seleccionar un producto
     {
-        return 'Detalle del producto ' . $id;
+        $product = Product::findOrFail($id);
+        return response()->json($product, 200);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id) //Actualizar producto
     {
-        return 'Actualizar el producto ' . $id;
+        $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required',  
+        ]);
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+
+        return response()->json($product, 201);
     }
 
-    public function destroy(string $id)
+    public function destroy($id) //Eliminar producto
     {
-        return 'Eliminar el producto ' . $id;
+        $product = Product::findOrFail($id);
+        $product->delete();
+    
+        return response()->json(['message' => 'Producto eliminado exitosamente.'], 200);
     }
 }
