@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Middleware\AttachBearerToken;
+use App\Http\Controllers\ProductController;
 
 Route::post('/login', function (Request $request) {
     // Validar las credenciales
@@ -29,7 +29,6 @@ Route::post('/login', function (Request $request) {
     ]);
 });
 
-
 Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     // Elimina el token actual del usuario
     $request->user()->currentAccessToken()->delete();
@@ -37,8 +36,17 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     return response()->json(['message' => 'Cierre de sesión exitoso']);
 });
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('products')-> group(function(){
+        Route::get('/', [ProductController::class, 'index']);
+        Route::post('/', [ProductController::class, 'create']);
+        Route::get('/{id}', [ProductController::class, 'show']);
+        Route::put('/{id}', [ProductController::class, 'update']);
+        Route::delete('/{id}', [ProductController::class, 'destroy']);
+    });
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (){
-    return 'hola';
+Route::middleware('auth:sanctum')->get('/p', function (){
+    return 'Prueba';
 });
 
