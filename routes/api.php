@@ -12,6 +12,10 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 
+Route::get('/', function () {
+    return response()->json(['message' => 'API RESTful Inventory System'], 200);
+});
+
 Route::post('/login', [LoginController::class, 'login']); // Ruta para iniciar sesión
  
 Route::middleware('auth:sanctum')->post('/logout', [LoginController::class, 'logout']); // Ruta para cerrar sesión
