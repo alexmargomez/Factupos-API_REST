@@ -19,7 +19,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'category_id' => 'required',  
+            'category_id' => 'required|exists:Categories,id',  
         ]);
 
         $product = Product::create($request->all());
