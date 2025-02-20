@@ -11,6 +11,7 @@ use App\Http\Controllers\InventoryMovementController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
+use App\Http\Controllers\ScheduleController;
 
 Route::get('/', function () {
     return response()->json(['message' => 'API RESTful Inventory System'], 200);
@@ -91,6 +92,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [SaleDetailController::class, 'show']);
         Route::put('/{id}', [SaleDetailController::class, 'update']);
         Route::delete('/{id}', [SaleDetailController::class, 'destroy']);
+    });
+
+    Route::prefix('schedule')-> group(function(){
+        Route::get('/', [ScheduleController::class, 'index']);
+        Route::post('/', [ScheduleController::class, 'create']);
+        Route::get('/{id}', [ScheduleController::class, 'show']);
+        Route::delete('/{id}', [ScheduleController::class, 'destroy']);
+
     });
 
 });

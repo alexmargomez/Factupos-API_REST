@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('Categories', function (Blueprint $table) {
+        Schema::create('Schedules', function (Blueprint $table) {
+            $table->id();
+            $table->json('servicios');
+            $table->string('customer_id', 10);
+            // Clave foránea que referencia a la tabla products
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('Categories', function (Blueprint $table) {
-            $table->dropTimestamps();
-        });
+        Schema::dropIfExists('Schedules');
     }
 };

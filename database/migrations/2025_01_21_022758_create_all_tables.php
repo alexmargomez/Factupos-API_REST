@@ -33,6 +33,7 @@ return new class extends Migration
         Schema::create('Categories', function (Blueprint $table){
             $table->id();
             $table->string('name');
+            $table->timestamps();
         });
         Schema::create('Products', function (Blueprint $table){
             $table->id();
