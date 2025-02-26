@@ -57,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('inventory')-> group(function(){
+        Route::get('/', [InventoryController::class, 'index']);
         Route::post('/', [InventoryController::class, 'create']);
         Route::get('/{id}', [InventoryController::class, 'stock']);
         Route::put('/{id}', [InventoryController::class, 'update']);
@@ -94,8 +95,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [SaleDetailController::class, 'destroy']);
     });
 
-    Route::prefix('schedule')-> group(function(){
+    Route::prefix('schedules')-> group(function(){
         Route::get('/', [ScheduleController::class, 'index']);
+        Route::put('/{id}', [ScheduleController::class, 'update']);
         Route::post('/', [ScheduleController::class, 'create']);
         Route::get('/{id}', [ScheduleController::class, 'show']);
         Route::delete('/{id}', [ScheduleController::class, 'destroy']);

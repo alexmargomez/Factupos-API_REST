@@ -13,6 +13,8 @@ class Schedule extends Model
     protected $fillable = [
         'servicios',
         'customer_id',
+        'vehicle_id',
+        'state'
         
     ];
 

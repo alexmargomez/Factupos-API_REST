@@ -80,8 +80,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sale_id');  // Relacionado con la venta
             $table->unsignedBigInteger('product_id');  // Relacionado con el producto
             $table->integer('quantity');  // Cantidad vendida
-            $table->unsignedInteger('price');  // Precio unitario del producto
-            $table->unsignedInteger('total');  // Total por producto (cantidad * precio)
+            $table->unsignedInteger('priceTotal');
             $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
             $table->foreign('product_id')->references('id')->on('Products')->onDelete('cascade');  // Relación con la tabla 'products'
             $table->timestamps();

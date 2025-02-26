@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
+    public function index() //Listar productos
+    {
+        $inventory = Inventory::all();
+        return response()->json($inventory, 200);
+    }
+
     public function create(Request $request) //Crear inventario
     {
         $request->validate([

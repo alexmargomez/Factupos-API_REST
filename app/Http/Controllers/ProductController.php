@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,7 +12,13 @@ class ProductController extends Controller
     public function index() //Listar productos
     {
         $products = Product::all();
-        return response()->json($products, 200);
+        $productWithStock = $products->map(function($product){
+            $inventory = Inventory::where('product_id', $product->id)->first();
+            $product->stock = $inventory ? $inventory->stock : 0;
+            return $product;
+        });
+
+        return response()->json($productWithStock, 200);
     }
 
     public function create(Request $request) //Crear producto
