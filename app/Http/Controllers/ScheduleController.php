@@ -34,19 +34,17 @@ class ScheduleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $schedule = Schedule::where('customer_id', $id)->firstOrfail();
+
         $request->validate([
-            'customer_id' => 'required|exists:Customers,id',
             'servicios' => 'required|array',
-            'vehicle_id' => 'required|exists:Vehicles,id',
             'state' => 'required|in:Pendiente,Completado',
         ]);
 
-        $schedule = Schedule::find($id);
+        
         $schedule->update([
-            'customer_id' => $request->customer_id,
-            'state' => $request->state,
-            'vehicle_id' => $request->vehicle_id,
             'servicios' => json_encode($request->servicios),
+            'state' => $request->state,
         ]);
 
         return response()->json($schedule, 201);
@@ -54,7 +52,7 @@ class ScheduleController extends Controller
 
     public function show($id)
     {
-        $schedule = Schedule::find($id);
+        $schedule = Schedule::where('customer_id', $id)->get();
         return response()->json($schedule, 200);
     }
     
