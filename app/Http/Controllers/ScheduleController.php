@@ -34,7 +34,7 @@ class ScheduleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $schedule = Schedule::where('customer_id', $id)->firstOrfail();
+        $schedule = Schedule::findOrFail($id);
 
         $request->validate([
             'servicios' => 'required|array',
