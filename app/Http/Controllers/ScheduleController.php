@@ -58,6 +58,7 @@ class ScheduleController extends Controller
     
     public function destroy(string $id)
     {
+        $schedule = Schedule::findOrFail($id);
         $schedule->delete();
 
         return response()->json(null, 204);
