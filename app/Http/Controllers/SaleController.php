@@ -17,7 +17,6 @@ class SaleController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|integer',
-            'sale_date' => 'required|date',
             'total' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);

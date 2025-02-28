@@ -18,8 +18,7 @@ class InvoiceController extends Controller
         $request->validate([
             'sale_id' => 'required|integer',
             'invoice_number' => 'required|date',
-            'invoice_date' => 'required|date',
-            'total' => 'required|numeric',
+            
         ]);
         
         $invoice = Invoice::create($request->all());
@@ -37,8 +36,7 @@ class InvoiceController extends Controller
         $request->validate([
             'sale_id' => 'required|integer',
             'invoice_number' => 'required|date',
-            'invoice_date' => 'required|date',
-            'total' => 'required|numeric',
+            
         ]);
         $invoice = Invoice::find($id);
         $invoice->update($request->all());

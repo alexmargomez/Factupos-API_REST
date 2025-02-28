@@ -10,5 +10,5 @@ class SaleDetail extends Model
     use HasFactory;
     
     protected $table = 'Sale_details';
-    protected $fillable = [ 'sale_id', 'product_id', 'quantity', 'price', 'total'];
+    protected $fillable = [ 'sale_id', 'product_id', 'quantity', 'price_total'];
 }

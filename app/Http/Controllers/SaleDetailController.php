@@ -19,8 +19,7 @@ class SaleDetailController extends Controller
             'sale_id' => 'required|integer',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'total' => 'required|numeric',
+            'price_total' => 'required|integer',
         ]);
         
         $sale_detail = SaleDetail::create($request->all());
@@ -39,8 +38,7 @@ class SaleDetailController extends Controller
             'sale_id' => 'required|integer',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'total' => 'required|numeric',
+            'total' => 'required|interger',
         ]);
         $sale_detail = SaleDetail::find($id);
         $sale_detail->update($request->all());

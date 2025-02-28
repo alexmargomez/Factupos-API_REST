@@ -14,7 +14,7 @@ return new class extends Migration
 
         Schema::create('Services', function(Blueprint $table){
             $table->id();
-            $table->unsignedBigInteger('sales_id');
+            $table->unsignedBigInteger('sale_id');
             $table->string('date');
             $table->unsignedInteger('price');
             $table->timestamps();
