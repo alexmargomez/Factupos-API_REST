@@ -39,7 +39,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price')->unsigned();
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             // Clave foránea que referencia a la tabla products
             $table->foreign('category_id')->references('id')->on('Categories')->onDelete('cascade');
             $table->timestamps();
@@ -67,29 +67,55 @@ return new class extends Migration
         });
         Schema::create('Sales', function (Blueprint $table){
             $table->id();  // Crea la columna 'id' como clave primaria
-            $table->string('customer_id', 10);  // Relacionado con el cliente
+            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('vehicle_id')->nullable();
             $table->unsignedInteger('total');  // Total de la venta
             $table->string('payment_method', 50)->nullable();  // Método de pago
             $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');
+            $table->foreign('vehicle_id')->references('id')->on('Vehicles')->onDelete('cascade');
             $table->timestamps(); 
            
         });
         Schema::create('Sale_details', function (Blueprint $table){
             $table->id();  // Crea la columna 'id' como clave primaria
             $table->unsignedBigInteger('sale_id');  // Relacionado con la venta
-            $table->unsignedBigInteger('product_id');  // Relacionado con el producto
+            $table->unsignedBigInteger('product_id');
+            $table->string('customer_id'); // Relacionado con el producto
             $table->integer('quantity');  // Cantidad vendida
             $table->unsignedInteger('price_total');
             $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
             $table->foreign('product_id')->references('id')->on('Products')->onDelete('cascade');  // Relación con la tabla 'products'
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade'); 
             $table->timestamps();
 
         });
         Schema::create('Invoices', function (Blueprint $table){
             $table->id();  // Crea la columna 'id' como clave primaria
             $table->unsignedBigInteger('sale_id');  // Relacionado con la venta
-            $table->string('invoice_number', 50);  // Número de factura
+            $table->string('invoice_number')->unique();  // Número de factura
             $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
+            $table->timestamps();
+        });
+        Schema::create('Schedules', function (Blueprint $table) {
+            $table->id();
+            $table->json('servicios');
+            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('vehicle_id');
+            $table->enum('state',['Pendiente','Completado']);
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');            
+            $table->foreign('vehicle_id')->references('id')->on('Vehicles')->onDelete('cascade');
+            $table->timestamps();
+        });
+        Schema::create('Services', function(Blueprint $table){
+            $table->id();
+            $table->unsignedBigInteger('sale_id');
+            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('vehicle_id');
+            $table->string('date');
+            $table->unsignedInteger('price');            
+            $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');            
+            $table->foreign('vehicle_id')->references('id')->on('Vehicles')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -108,6 +134,7 @@ return new class extends Migration
         Schema::dropIfExists('Categories');
         Schema::dropIfExists('Vehicles');
         Schema::dropIfExists('Customers');
-        Schema::dropIfExists('Users');
+        Schema::dropIfExists('Schedules');
+        Schema::dropIfExists('Services');
     }
 };

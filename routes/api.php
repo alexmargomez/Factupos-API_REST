@@ -92,6 +92,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [SaleDetailController::class, 'index']);
         Route::post('/', [SaleDetailController::class, 'create']);
         Route::get('/{id}', [SaleDetailController::class, 'show']);
+        Route::get('/customer/{id}', [SaleDetailController::class, 'showCustomer']);
         Route::put('/{id}', [SaleDetailController::class, 'update']);
         Route::delete('/{id}', [SaleDetailController::class, 'destroy']);
     });
@@ -107,6 +108,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('services')-> group(function(){
         Route::post('/', [ServiceController::class, 'create']);
+        Route::get('/{id}', [ServiceController::class, 'show']);
+        Route::get('/pdf/{id}', [ServiceController::class, 'showPdf']);
+        Route::get('/customer/{id}', [ServiceController::class, 'showCustomer']);
+        Route::get('/vehicle/{id}', [ServiceController::class, 'showVehicle']);
     });
 
 });

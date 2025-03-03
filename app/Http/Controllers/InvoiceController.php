@@ -17,7 +17,6 @@ class InvoiceController extends Controller
     {
         $request->validate([
             'sale_id' => 'required|integer',
-            'invoice_number' => 'required|date',
             
         ]);
         
@@ -27,6 +26,12 @@ class InvoiceController extends Controller
 
     function show($id) //Obtener factura
     {
+        $invoice = Invoice::where('sale_id', $id)->get();
+        return response()->json($invoice, 200);
+    }
+
+    function showPdf($id) //Obtener factura PDF
+    {
         $invoice = Invoice::find($id);
         return response()->json($invoice, 200);
     }
@@ -34,9 +39,7 @@ class InvoiceController extends Controller
     function update(Request $request, $id) //Actualizar factura
     {
         $request->validate([
-            'sale_id' => 'required|integer',
-            'invoice_number' => 'required|date',
-            
+            'sale_id' => 'required|integer',  
         ]);
         $invoice = Invoice::find($id);
         $invoice->update($request->all());

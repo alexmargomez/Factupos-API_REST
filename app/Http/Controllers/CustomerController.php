@@ -35,7 +35,6 @@ class CustomerController extends Controller
     public function update(Request $request, $id) //Actualizar producto
     {
         $request->validate([
-            'id' => 'required|string',
             'name' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required|string',

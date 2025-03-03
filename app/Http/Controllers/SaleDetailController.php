@@ -18,6 +18,7 @@ class SaleDetailController extends Controller
         $request->validate([
             'sale_id' => 'required|integer',
             'product_id' => 'required|integer',
+            'customer_id' => 'required|integer',
             'quantity' => 'required|integer',
             'price_total' => 'required|integer',
         ]);
@@ -28,15 +29,18 @@ class SaleDetailController extends Controller
 
     function show($id) //Obtener detalle de venta
     {
-        $sale_detail = SaleDetail::find($id);
+        $sale_detail = SaleDetail::where('sale_id',$id)->get();
+        return response()->json($sale_detail, 200);
+    }
+    function showCustomer($id)
+    {
+        $sale_detail = SaleDetail::where('customer_id',$id)->get();
         return response()->json($sale_detail, 200);
     }
 
     function update(Request $request, $id) //Actualizar detalle de venta
     {
         $request->validate([
-            'sale_id' => 'required|integer',
-            'product_id' => 'required|integer',
             'quantity' => 'required|integer',
             'total' => 'required|interger',
         ]);

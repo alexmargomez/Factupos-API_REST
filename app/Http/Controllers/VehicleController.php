@@ -38,8 +38,7 @@ class VehicleController extends Controller
         $request->validate([
             'plate' => 'required|string',
             'model' => 'required|string',
-            'make' => 'required|string',
-            'customer_id' => 'required',  
+            'make' => 'required|string', 
         ]);
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->update($request->all());

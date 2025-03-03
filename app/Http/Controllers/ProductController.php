@@ -26,7 +26,6 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'category_id' => 'required|exists:Categories,id',  
         ]);
 
         $product = Product::create($request->all());
@@ -38,13 +37,13 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return response()->json($product, 200);
     }
+    
 
     public function update(Request $request, $id) //Actualizar producto
     {
         $request->validate([
             'name' => 'required|string',
-            'price' => 'required|numeric',
-            'category_id' => 'required',  
+            'price' => 'required|numeric', 
         ]);
         $product = Product::findOrFail($id);
         $product->update($request->all());

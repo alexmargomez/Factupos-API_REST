@@ -17,6 +17,7 @@ class SaleController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|integer',
+            'vehicle_id' => 'integer',
             'total' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);
@@ -35,7 +36,7 @@ class SaleController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|integer',
-            'sale_date' => 'required|date',
+            'vehicle_id' => 'integer',
             'total' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);
