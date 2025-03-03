@@ -12,5 +12,8 @@ class Vehicle extends Model
     protected $table = 'Vehicles';
     protected $fillable = ['plate', 'model', 'make', 'customer_id'];
 
-    
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use App\Models\Sale;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
@@ -34,7 +35,20 @@ class InvoiceController extends Controller
     function showPdf($id) //Obtener factura PDF
     {
         $invoice = Invoice::findOrFail($id);
-        $data = ['invoice' => $invoice];
+
+        $sale = Sale::findOrFail($invoice->sale_id);
+
+        // Obtener el cliente y el vehículo relacionados con la venta
+        $customer = $sale->customer_id;
+        $vehicle = $sale->vehicle_id;
+
+        // Preparar los datos para la vista
+        $data = [
+            'invoice' => $invoice,
+            'sale' => $sale,
+            'customer' => $customer,
+            'vehicle' => $vehicle,
+        ];
 
         $pdf = Pdf::loadView('invoices.show', $data);
 

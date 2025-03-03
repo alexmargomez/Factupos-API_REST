@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Invoice {{ $invoice->id }}</title>
-    <style>
-        /* Estilos para el PDF */
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .invoice {
-            margin: 20px;
-        }
-        .header, .footer {
-            text-align: center;
-        }
-        .content {
-            margin: 20px 0;
-        }
-    </style>
+    <title>Invoice</title>
 </head>
 <body>
-    <div class="invoice">
-        <div class="header">
-            <h1>Invoice #{{ $invoice->id }}</h1>
-            <p>Date: {{ $invoice->created_at->format('Y-m-d') }}</p>
-        </div>
-        <div class="content">
-            <!-- Aquí van los detalles de la factura -->
-            <p><strong>Customer:</strong> {{ $invoice->sale_id }}</p>
-            <!-- Añade más detalles según sea necesario -->
-        </div>
-        <div class="footer">
-            <p>Thank you for your business!</p>
-        </div>
-    </div>
+    <h1>Invoice #{{ $invoice->id }}</h1>
+    <p>Date: {{ $invoice->created_at }}</p>
+
+    <h2>Customer Details</h2>
+    <p>Name: {{ $customer->name }}</p>
+    <p>Email: {{ $customer->email }}</p>
+
+    <h2>Vehicle Details</h2>
+    <p>Make: {{ $vehicle->make }}</p>
+    <p>Model: {{ $vehicle->model }}</p>
+    <p>Year: {{ $vehicle->year }}</p>
+
+    <h2>Sale Details</h2>
+    <p>Total: {{ $sale->total }}</p>
 </body>
 </html>
