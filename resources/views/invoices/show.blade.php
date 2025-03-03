@@ -14,9 +14,8 @@
     <h2>Vehicle Details</h2>
     <p>Make: {{ $vehicle->make }}</p>
     <p>Model: {{ $vehicle->model }}</p>
-    <p>Year: {{ $vehicle->year }}</p>
 
     <h2>Sale Details</h2>
-    <p>Total: {{ $sale->total }}</p>
+    <p>Sale ID: {{ $sale->total }}</p>
 </body>
 </html>
