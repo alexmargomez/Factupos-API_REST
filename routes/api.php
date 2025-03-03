@@ -13,6 +13,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServiceController;
+use App\Models\Invoice;
 
 Route::get('/', function () {
     return response()->json(['message' => 'API RESTful Inventory System'], 200);
@@ -76,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [InvoiceController::class, 'index']);
         Route::post('/', [InvoiceController::class, 'create']);
         Route::get('/{id}', [InvoiceController::class, 'show']);
+        Route::get('/pdf/{id}', [InvoiceController::class, 'showPdf']);
         Route::put('/{id}', [InvoiceController::class, 'update']);
         Route::delete('/{id}', [InvoiceController::class, 'destroy']);
     });
@@ -109,7 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('services')-> group(function(){
         Route::post('/', [ServiceController::class, 'create']);
         Route::get('/{id}', [ServiceController::class, 'show']);
-        Route::get('/pdf/{id}', [ServiceController::class, 'showPdf']);
+        
         Route::get('/customer/{id}', [ServiceController::class, 'showCustomer']);
         Route::get('/vehicle/{id}', [ServiceController::class, 'showVehicle']);
     });

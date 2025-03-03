@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -32,8 +33,12 @@ class InvoiceController extends Controller
 
     function showPdf($id) //Obtener factura PDF
     {
-        $invoice = Invoice::find($id);
-        return response()->json($invoice, 200);
+        $invoice = Invoice::findOrFail($id);
+        $data = ['invoice' => $invoice];
+
+        $pdf = Pdf::loadView('invoices.show', $data);
+
+        return $pdf->download("invoice_{$id}.pdf");
     }
 
     function update(Request $request, $id) //Actualizar factura
