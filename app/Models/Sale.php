@@ -22,5 +22,15 @@ class Sale extends Model
     {
         return $this->belongsTo(Vehicle::class);
     }
-    
+    public function saleDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
+
+    // Definir la relación con Services
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
 }

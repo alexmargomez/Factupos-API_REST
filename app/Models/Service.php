@@ -11,4 +11,9 @@ class Service extends Model
 
     protected $table = 'Services';
     protected $fillable = ['sale_id', 'date', 'price', 'customer_id', 'vehicle_id'];
+    
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
 }

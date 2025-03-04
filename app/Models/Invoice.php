@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Webpatser\Uuid\Uuid;
 
 class Invoice extends Model
 {
@@ -12,6 +11,11 @@ class Invoice extends Model
     
     protected $table = 'Invoices';
     protected $fillable = [ 'sale_id', 'invoice_number'];
+
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
 
     public static function boot()
     {
@@ -24,6 +28,8 @@ class Invoice extends Model
             $date = date('Ymd'); // Fecha actual en formato YYYYMMDD
             $model->invoice_number = $date . '-' . str_pad($newInvoiceNumber, 6, '0', STR_PAD_LEFT);
         });
+
+
     }
 }
 

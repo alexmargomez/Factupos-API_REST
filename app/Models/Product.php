@@ -12,5 +12,9 @@ class Product extends Model
     protected $table = 'Products';  
     protected $fillable = ['name', 'price'];  
 
+    public function saleDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
     
 }

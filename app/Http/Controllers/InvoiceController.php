@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Sale;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class InvoiceController extends Controller
 {
@@ -36,26 +36,28 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
 
-        $sale = Sale::findOrFail($invoice->sale_id);
+        $sale = Sale::with(['customer', 'vehicle', 'saleDetails.product', 'services'])->findOrFail($invoice->sale_id);
 
-        // Obtener el cliente y el vehículo relacionados con la venta
-        $customer = $sale->customer_id;
-        $vehicle = $sale->vehicle_id;
+        $customer = $sale->customer;
+        $vehicle = $sale->vehicle;
+        $saleDetails = $sale->saleDetails;
+        $services = $sale->services;
 
-        // Preparar los datos para la vista
         $data = [
             'invoice' => $invoice,
             'sale' => $sale,
             'customer' => $customer,
             'vehicle' => $vehicle,
+            'saleDetails' => $saleDetails,
+            'services' => $services,
         ];
 
-        $pdf = Pdf::loadView('invoices.show', $data);
+        $pdf = SnappyPdf::loadView('invoices.show', $data);
 
         return $pdf->download("invoice_{$id}.pdf");
     }
 
-    function update(Request $request, $id) //Actualizar factura
+    function update(Request $request, $id) 
     {
         $request->validate([
             'sale_id' => 'required|integer',  

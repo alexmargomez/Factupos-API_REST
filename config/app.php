@@ -2,6 +2,8 @@
 
 return [
 
+
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -105,6 +107,7 @@ return [
         ),
     ],
 
+    
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -122,5 +125,11 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'aliases' => [
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+    ],
+
 
 ];
