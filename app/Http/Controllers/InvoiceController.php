@@ -54,7 +54,7 @@ class InvoiceController extends Controller
 
         $pdf = SnappyPdf::loadView('invoices.show', $data);
 
-        return $pdf->download("invoice_{$id}.pdf");
+        return $pdf->stream("invoice_{$id}.pdf", ['Attachment' => false]);
     }
 
     function update(Request $request, $id) 

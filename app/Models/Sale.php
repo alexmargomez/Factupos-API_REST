@@ -10,14 +10,13 @@ class Sale extends Model
     use HasFactory;
     
     protected $table = 'Sales';
-    protected $fillable = [ 'customer_id','vehicle_id','total','payment_method'];
+    protected $fillable = [ 'customer_id','vehicle_id','total','payment_method','worker_id'];
     
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
-
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
@@ -26,11 +25,13 @@ class Sale extends Model
     {
         return $this->hasMany(SaleDetail::class);
     }
-
-    // Definir la relación con Services
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+    public function worker()
+    {
+        return $this->hasOne(Worker::class);
     }
 
 }

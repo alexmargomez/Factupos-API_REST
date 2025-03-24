@@ -14,11 +14,16 @@ class Schedule extends Model
         'servicios',
         'customer_id',
         'vehicle_id',
-        'state'
-        
+        'state',
+        'worker_id',
     ];
 
     protected $casts = [
         'servicios' => 'array',
     ];
+
+    public function worker()
+    {
+        return $this->hasOne(Worker::class);
+    }
 }

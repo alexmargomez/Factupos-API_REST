@@ -16,9 +16,8 @@ class CustomerController extends Controller
     public function create(Request $request) //Crear producto
     {
         $request->validate([
-            'id' => 'required|string',
             'name' => 'required|string',
-            'email' => 'required|string',
+            'email' => 'required|email',
             'phone' => 'required|string',
         ]);
         

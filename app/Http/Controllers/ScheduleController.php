@@ -20,13 +20,15 @@ class ScheduleController extends Controller
             'servicios' => 'required|array',
             'vehicle_id' => 'required|exists:Vehicles,id',
             'state' => 'required|in:Pendiente,Completado',
+            'worker_id' => 'required|exists:Workers,id',
         ]);
 
         $schedule = Schedule::create([
             'customer_id' => $request->customer_id,
             'state' => $request->state,
             'vehicle_id' => $request->vehicle_id,
-            'servicios' => json_encode($request->servicios), // Encode the array to JSON
+            'servicios' => json_encode($request->servicios),
+            'worker_id' => $request->worker_id,
         ]);
 
         return response()->json($schedule, 201);
@@ -45,6 +47,8 @@ class ScheduleController extends Controller
         $schedule->update([
             'servicios' => json_encode($request->servicios),
             'state' => $request->state,
+            'worker_id' => $request->worker_id,
+
         ]);
 
         return response()->json($schedule, 201);

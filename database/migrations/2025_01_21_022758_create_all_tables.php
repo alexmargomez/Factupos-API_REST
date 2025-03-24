@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('Customers', function (Blueprint $table){
-            $table->string('id', 10)->primary();
+            $table->id();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone', 10)->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('plate');
             $table->string('model');
             $table->string('make');
-            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('customer_id');
             // Clave foránea que referencia a la tabla products
             $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');
             $table->timestamps();
@@ -67,7 +67,7 @@ return new class extends Migration
         });
         Schema::create('Sales', function (Blueprint $table){
             $table->id();  // Crea la columna 'id' como clave primaria
-            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('vehicle_id')->nullable();
             $table->unsignedInteger('total');  // Total de la venta
             $table->string('payment_method', 50)->nullable();  // Método de pago
@@ -80,7 +80,7 @@ return new class extends Migration
             $table->id();  // Crea la columna 'id' como clave primaria
             $table->unsignedBigInteger('sale_id');  // Relacionado con la venta
             $table->unsignedBigInteger('product_id');
-            $table->string('customer_id'); // Relacionado con el producto
+            $table->unsignedBigInteger('customer_id');
             $table->integer('quantity');  // Cantidad vendida
             $table->unsignedInteger('price_total');
             $table->foreign('sale_id')->references('id')->on('Sales')->onDelete('cascade');  // Relación con la tabla 'sales'
@@ -99,7 +99,7 @@ return new class extends Migration
         Schema::create('Schedules', function (Blueprint $table) {
             $table->id();
             $table->json('servicios');
-            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('vehicle_id');
             $table->enum('state',['Pendiente','Completado']);
             $table->foreign('customer_id')->references('id')->on('Customers')->onDelete('cascade');            
@@ -109,7 +109,7 @@ return new class extends Migration
         Schema::create('Services', function(Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('sale_id');
-            $table->string('customer_id', 10);
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('vehicle_id');
             $table->string('date');
             $table->unsignedInteger('price');            
